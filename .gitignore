@@ -1,1 +1,6 @@
 /target
+/
+/.idea/.gitignore
+/.idea/modules.xml
+/.idea/Academic-groups.iml
+/.idea/vcs.xml
