@@ -9,8 +9,6 @@ pub struct User {
     pub email: String,
     pub password: String,
     pub role: String,
-    pub photo: String,
-    pub verified: bool,
     #[serde(rename = "createdAt")]
     pub created_at: Option<DateTime<Utc>>,
     #[serde(rename = "updatedAt")]
