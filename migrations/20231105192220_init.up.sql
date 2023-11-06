@@ -6,7 +6,8 @@ CREATE TABLE
                 name VARCHAR(100) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(100) NOT NULL,
-                role VARCHAR(50) NOT NULL DEFAULT 'user',
+                role VARCHAR(50) NOT NULL DEFAULT 'student',
+                class INTEGER NOT NULL CHECK (class >= 1 AND class <= 12),
                 created_at TIMESTAMP
                        WITH
                            TIME ZONE DEFAULT NOW(),
