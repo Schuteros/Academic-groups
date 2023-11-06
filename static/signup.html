@@ -11,6 +11,13 @@
         <form action="signup.php" method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <select name="role">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            <label for="grade">Grade:</label>
+            <input type="number" name="grade" id="grade" min="1" max="12" required>
             <input type="submit" value="Sign Up">
         </form>
         <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
