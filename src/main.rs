@@ -20,7 +20,7 @@ pub struct AppState {
 }
 
 async fn login_form() -> Result<NamedFile, Error> {
-    Ok(NamedFile::open("static/signin.html")?)
+    Ok(NamedFile::open("static/login.html")?)
 }
 
 #[actix_web::main]
@@ -65,7 +65,7 @@ async fn main() -> std::io::Result<()> {
                 db: pool.clone(),
                 env: config.clone(),
             }))
-            .service(fs::Files::new("/static", "./static"))
+            .service(fs::Files::new("/static", "./static").show_files_listing())
             .configure(handler::config)
             .wrap(cors)
             .wrap(Logger::default())
