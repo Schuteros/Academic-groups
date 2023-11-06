@@ -4,10 +4,7 @@ use crate::{
     response::FilteredUser,
     AppState,
 };
-use actix_web::{
-    cookie::{time::Duration as ActixWebDuration, Cookie},
-    get, post, web, HttpMessage, HttpRequest, HttpResponse, Responder,
-};
+use actix_web::{cookie::{time::Duration as ActixWebDuration, Cookie}, get, post, web, HttpMessage, HttpRequest, HttpResponse, Responder};
 use argon2::{
     password_hash::{rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString},
     Argon2,
@@ -38,7 +35,7 @@ async fn register_user_handler(
 
     if exists {
         return HttpResponse::Conflict().json(
-            serde_json::json!({"status": "fail","message": "User with that email already exists"}),
+            json!({"status": "fail","message": "User with that email already exists"}),
         );
     }
 
@@ -57,20 +54,21 @@ async fn register_user_handler(
         .fetch_one(&data.db)
         .await;
 
-    match query_result {
+    return match query_result {
         Ok(user) => {
-            let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
+            let user_response = json!({"status": "success","data": serde_json::json!({
                 "user": filter_user_record(&user)
             })});
 
-            return HttpResponse::Ok().json(user_response);
+            HttpResponse::Ok().json(user_response)
         }
         Err(e) => {
-            return HttpResponse::InternalServerError()
-                .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
+            HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}))
         }
     }
 }
+
 #[post("/auth/login")]
 async fn login_user_handler(
     body: web::Json<LoginUserSchema>,
@@ -149,7 +147,7 @@ async fn get_me_handler(
         .await
         .unwrap();
 
-    let json_response = serde_json::json!({
+    let json_response = json!({
         "status":  "success",
         "data": serde_json::json!({
             "user": filter_user_record(&user)
@@ -177,6 +175,5 @@ pub fn config(conf: &mut web::ServiceConfig) {
         .service(login_user_handler)
         .service(logout_handler)
         .service(get_me_handler);
-
     conf.service(scope);
 }
