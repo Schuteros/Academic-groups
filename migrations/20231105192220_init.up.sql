@@ -15,5 +15,3 @@ CREATE TABLE
                        WITH
                            TIME ZONE DEFAULT NOW()
 );
-
-CREATE INDEX users_email_idx ON users (email);
